@@ -9,9 +9,7 @@ import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.ext.interceptor.GET;
 import com.jfinal.ext.interceptor.POST;
-import com.jfinal.json.FastJson;
 import com.jfinal.kit.Kv;
-import com.jfinal.plugin.activerecord.ActiveRecordException;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
@@ -22,8 +20,6 @@ import com.jfinal.upload.UploadFile;
 import domain.dto.TestDto;
 import domain.po.Test;
 import domain.po.Testc;
-import domain.po.Wl_Channel_Consumer;
-import interceptor.ClassInterceptor;
 import interceptor.MethodInterceptor;
 import interceptor.MethodInterceptorSecond;
 

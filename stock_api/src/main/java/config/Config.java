@@ -6,11 +6,9 @@ package config;/*
 import com.jfinal.config.*;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
+import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.template.Engine;
-import domain.po.Test;
-import domain.po.Testc;
 import domain.po.User;
-import domain.po.Wl_Channel_Consumer;
 import handler.WebSocketHandler;
 import interceptor.HeaderInterceptor;
 
@@ -24,6 +22,7 @@ public class Config extends JFinalConfig {
     public void configRoute(Routes routes) {
 //        路由配置使用路由拆分配置的方式
         routes.add(new BlankRoutes());
+        routes.add(new StockRoutes());
     }
 
     @Override
@@ -35,21 +34,24 @@ public class Config extends JFinalConfig {
     public void configPlugin(Plugins plugins) {
 //        数据库配置
 //        要自己添加maven依赖才能用
-        DruidPlugin dp = new DruidPlugin("jdbc:mysql://127.0.0.1:3306/oa?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC", "root", "root");
+        DruidPlugin dp = new DruidPlugin("jdbc:mysql://127.0.0.1:3306/stock_rebuild?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC", "root", "root");
         plugins.add(dp);
         ActiveRecordPlugin arp = new ActiveRecordPlugin(dp);
 //        引入sql文件，用于动态sql语句
-        arp.addSqlTemplate("templets/hello.sql");
-        arp.addSqlTemplate("templets/more.sql");
+//        arp.addSqlTemplate("templets/hello.sql");
+//        arp.addSqlTemplate("templets/more.sql");
         plugins.add(arp);
 //        添加对应的数据表
         arp.addMapping("user", User.class);
-        arp.addMapping("test", Test.class);
-        arp.addMapping("testc", Testc.class);
-        arp.addMapping("wl_channel_consumer", Wl_Channel_Consumer.class);
+//        arp.addMapping("test", Test.class);
+//        arp.addMapping("testc", Testc.class);
+//        arp.addMapping("wl_channel_consumer", Wl_Channel_Consumer.class);
 //        显示执行的sql
         arp.setShowSql(true);
         plugins.add(arp);
+
+//        缓存
+        plugins.add(new EhCachePlugin());
 
 //        定时任务配置
 //        他妈的要自己引入maven包，牛逼得不行这个框架，详细见jfinal-backend/pom.xml
